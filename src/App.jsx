@@ -1,7 +1,7 @@
 import { useState, useRef } from 'react'
 
 import './App.css'
-import { Heading, VStack, Box, Text, Center } from '@chakra-ui/react'
+import { Heading, VStack, Box, Text, Center, HStack, Link } from '@chakra-ui/react'
 
 
 function App() {
@@ -80,59 +80,56 @@ function App() {
   };
   return (
     <>
-      <VStack spacing={4} w={"100vw"} h={"100%"}>
-     
-      <Heading as="h1" size="2xl">Adel Boussenane's Audio Portfolio</Heading>
-      <Text>For my software development portfolio, visit <a href="https://www.adeljs.dev">adeljs.dev</a>.</Text>
-      <Box mb={8}>
-      <Heading as="h2" size="lg" mb={4}>
-        Videos
-      </Heading>
-      <VStack spacing={4} align="stretch">
-        {videos.map((item, index) => (
-          <Box key={index} p={4}  borderRadius="lg" w={"75vw"} h={"30vh"} mb={20}>
-            <Heading as="h3" size="md" mb={2}>
-              {item.title}
-            </Heading>
-            <Text mb={2}>{item.description}</Text>
-            
-              <iframe src={item.url} width={"100%"} height={"100%"} frameborder="0" allow="autoplay; fullscreen; picture-in-picture; clipboard-write" title="VPD Animation by Aktash Singh"
-              ref={(el) => (videoRefs.current[index] = el)}
-              onPlay={() => handleVideoPlay(index)}
-              ></iframe> 
-            
-          </Box>
-        ))}
+    <Center w="100vw" p={4} >
+      <VStack spacing={4} w="100%" h="100%" overflow="hidden" maxW="900px" mx="auto">
+        <Heading as="h1" size="2xl" textAlign="center">Adel Boussenane's Audio Portfolio</Heading>
+        <Text textAlign="center">For my software development portfolio, visit <a href="https://www.adeljs.dev">adeljs.dev</a>.</Text>
+          <HStack spacing={4} align="center" justify="center">
+          <Text textAlign="center">Contact me on <Link href="mailto:https://www.linkedin.com/in/adel-boussenane-28545317a/">LinkedIn </Link>
+            or via email: <Link href="mailto:aboussenane@gmail.com">aboussenane@gmail.com</Link></Text>
+          </HStack>
+        <Box mb={8} w="100%">
+          <Heading as="h2" size="lg" mb={4} textAlign="center">Videos</Heading>
+          <VStack spacing={4} align="stretch">
+            {videos.map((item, index) => (
+              <Box key={index} p={4} borderRadius="lg" w="100%" mb={8}>
+                <Heading as="h3" size="md" mb={2}>{item.title}</Heading>
+                <Text mb={2}>{item.description}</Text>
+                <iframe
+                  src={item.url}
+                  width="100%"
+                  height="250px"
+                  frameBorder="0"
+                  allow="autoplay; fullscreen; picture-in-picture; clipboard-write"
+                  title={item.title}
+                  ref={(el) => (videoRefs.current[index] = el)}
+                  onPlay={() => handleVideoPlay(index)}
+                ></iframe>
+              </Box>
+            ))}
+          </VStack>
+        </Box>
+        
+        <Box mb={8} w="100%">
+          <Heading as="h2" size="lg" mb={4} textAlign="center">Audio</Heading>
+          <VStack spacing={4} align="stretch">
+            {audioClips.map((item, index) => (
+              <Box key={index} p={4} borderWidth={1} borderRadius="lg" w="100%">
+                <Heading as="h3" size="md" mb={2}>{item.title}</Heading>
+                <Text mb={2}>{item.description}</Text>
+                <Center>
+                  <audio controls ref={(el) => (audioRefs.current[index] = el)} onPlay={() => handlePlay(index)}>
+                    <source src={item.url} type="audio/wav" />
+                    Your browser does not support the audio element.
+                  </audio>
+                </Center>
+              </Box>
+            ))}
+          </VStack>
+        </Box>
       </VStack>
-    </Box>
-    <Box mb={8}>
-      <Heading as="h2" size="lg" mb={4}>
-        Audio
-      </Heading>
-      <VStack spacing={4} align="stretch">
-        {audioClips.map((item, index) => (
-          <Box key={index} p={4} borderWidth={1} borderRadius="lg">
-            <Heading as="h3" size="md" mb={2}>
-              {item.title}
-            </Heading>
-            <Text mb={2}>{item.description}</Text>
-            <Center>
-              <audio controls 
-              ref={(el) => (audioRefs.current[index] = el)}
-              onPlay={() => handlePlay(index)}
-              >
-                <source src={item.url} type="audio/wav" />
-                Your browser does not support the audio element.
-              </audio>
-              </Center>
-          </Box>
-        ))}
-      </VStack>
-    </Box>
-    
-      </VStack>
-      
-    </>
+    </Center>
+  </>
   )
 }
 
